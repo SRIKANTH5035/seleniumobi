@@ -15,11 +15,8 @@ public class ChromeDriverManager {
         Dimension d = new Dimension(1382, 744);
 
         try {
-            //WebDriverManager.chromedriver().setup();
-            WebDriverManager.edgedriver().setup();
-
-            //driver = new ChromeDriver();
-            driver = new EdgeDriver();
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
             driver.manage().window().setSize(d);
         } catch (SessionNotCreatedException e) {
             driver = new ChromeDriver();

@@ -17,9 +17,6 @@ import java.util.List;
 
 public class BPQuote {
     private static final String homeUrl = "https://tst.k8s.devlabs/business-insurance-quote/";
-    private static final String outputPath = "\\\\\\\\sdc1as1350\\\\TestPro\\\\GIS\\\\Output\\\\GIS_OBI_Output\\\\";
-
-
     private ChromeDriverManager d;
     WebDriverWait w;
 
@@ -40,8 +37,6 @@ public class BPQuote {
         } catch (Exception e) {
             d.closeDriver();
             throw e;
-
-
         }
     }
 
@@ -138,31 +133,32 @@ public class BPQuote {
         t = w.until(ExpectedConditions.presenceOfElementLocated(BPLocators.submit));
         t.click();
 
-        WebElement output = w.until(ExpectedConditions.presenceOfElementLocated(BPLocators.output));
+        WebElement outputQuote = w.until(ExpectedConditions.presenceOfElementLocated(BPLocators.outputQuote));
+        WebElement outputDate = w.until(ExpectedConditions.presenceOfElementLocated(BPLocators.outputDate));
 
-        if (output.getText().contains("Quote no.")) {
-            quoteNo.add(output.getText().split("\\|")[0].replace("Quote no. ", "").trim());
-            policyStartDate.add(output.getText().split("\\|")[1].replace("Policy start date: ", "").trim());
+        if (outputQuote.isDisplayed()) {
+            quoteNo.add(outputQuote.getText().replace("Quote number: ", ""));
+            policyStartDate.add(outputDate.getText().replace("Policy start date: ", ""));
             errorMessage.add("No");
         } else {
             quoteNo.add("");
             policyStartDate.add("");
-            errorMessage.add(output.getText());
+            errorMessage.add(outputQuote.getText());
         }
 
-        if (!output.getText().isEmpty())
+        if (!outputQuote.getText().isEmpty())
             System.out.println("OBI Complete: Quote Number [" + quoteNo.get(quoteNo.size() - 1) + "], Start Date [" + policyStartDate.get(policyStartDate.size() - 1) + "]");
         else throw new Exception("[OBI Error]: Could not complete execution");
     }
 
-    public void saveToExcel() throws Exception {
+    public void saveToExcel(String path) throws Exception {
         ArrayList<String> headerList = new ArrayList<>();
 
         headerList.add("Quote Number");
         headerList.add("Policy Start Date");
         headerList.add("Has Error");
 
-        ExcelUtil.addRowToExcel(headerList, outputPath, "WebGis");
+        ExcelUtil.addRowToExcel(headerList, path, "WebGis");
 
         for (int i = 0; i < errorMessage.size(); i++) {
             ArrayList<String> outputRow = new ArrayList<>();
@@ -171,7 +167,7 @@ public class BPQuote {
             outputRow.add(policyStartDate.get(i));
             outputRow.add(errorMessage.get(i));
 
-            ExcelUtil.addRowToExcel(outputRow, outputPath, "WebGis");
+            ExcelUtil.addRowToExcel(outputRow, path, "WebGis");
 
         }
     }

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class RHQuote {
     private static final String homeUrl = "https://tst.k8s.devlabs/hobby-farm/";
-    private static final String outputPath = "\\\\\\\\sdc1as1350\\\\TestPro\\\\GIS\\\\Output\\\\GIS_OBI_Output\\\\";
     private ChromeDriverManager d;
     WebDriverWait w;
 
@@ -141,14 +140,14 @@ public class RHQuote {
         else throw new Exception("[OBI Error]: Could not complete execution");
     }
 
-    public void saveToExcel() throws Exception {
+    public void saveToExcel(String path) throws Exception {
         ArrayList<String> headerList = new ArrayList<>();
 
         headerList.add("Quote Number");
         headerList.add("Policy Start Date");
         headerList.add("Has Error");
 
-        ExcelUtil.addRowToExcel(headerList, outputPath, "WebGis");
+        ExcelUtil.addRowToExcel(headerList, path, "WebGis");
 
         for (int i = 0; i < errorMessage.size(); i++) {
             ArrayList<String> outputRow = new ArrayList<>();
@@ -157,7 +156,7 @@ public class RHQuote {
             outputRow.add(policyStartDate.get(i));
             outputRow.add(errorMessage.get(i));
 
-            ExcelUtil.addRowToExcel(outputRow, outputPath, "WebGis");
+            ExcelUtil.addRowToExcel(outputRow, path, "WebGis");
 
         }
     }

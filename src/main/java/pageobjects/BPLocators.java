@@ -25,5 +25,6 @@ public class BPLocators {
     static final By additionalCoverNo = By.xpath("//*[@id='CSGPL_ADDITIONAL_COVER_PHYSICAL_LEGAL_CONTROL_LIMIT_false_label']");
     static final By generalProductLibilityNo = By.xpath("//label[@id='CSGPL_ANY_CLAIMS_IN_LAST_5_YEARS_false_label']");
     static final By submit = By.xpath("//button[@type='submit']");
-    static final By output = By.xpath("//*[@id=\"nrma\"]/div[3]/span/div[2]/div[1]/div/div/div/span");
+    static final By outputQuote = By.xpath("//*[@id=\"newPriceHeader\"]/div[1]/p[1]");
+    static final By outputDate = By.xpath("//*[@id=\"newPriceHeader\"]/div[1]/p[2]");
 }

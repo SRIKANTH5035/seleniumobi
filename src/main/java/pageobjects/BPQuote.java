@@ -40,6 +40,8 @@ public class BPQuote {
         } catch (Exception e) {
             d.closeDriver();
             throw e;
+
+
         }
     }
 
